@@ -1,0 +1,603 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        @page {
+            size: a4 portrait;
+
+            @frame header_frame {
+                /* Static Frame */
+                -pdf-frame-content: header_content;
+                left: 50pt;
+                width: 512pt;
+                top: 30pt;
+                height: 70pt;
+            }
+
+            @frame content_frame {
+                /* Content Frame */
+                left: 50pt;
+                width: 512pt;
+                top: 90pt;
+                height: 632pt;
+            }
+
+            @frame footer_frame {
+                /* Another static Frame */
+                -pdf-frame-content: footer_content;
+                left: 50pt;
+                width: 512pt;
+                top: 772pt;
+                height: 20pt;
+            }
+        }
+
+        .tab {
+            background-color: red;
+        }
+
+        .alignRtight {
+            text-align: right;
+            padding: 0pt;
+            margin: 0pt;
+            text-decoration: none;
+            word-spacing: 0pt;
+        }
+
+        .valig {
+            vertical-align: top;
+        }
+
+        .flexContainer {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 5px;
+            padding-left: 5px;
+            border: 0.5px solid grey;
+            margin-top: 8px;
+        }
+
+        .td_normal {
+            font-size: 14px;
+        }
+
+        .odd {
+            background: black;
+        }
+
+        .even {
+            background-color: #f5f5f5;
+        }
+
+        .pd {
+            padding: 20px;
+        }
+        .td_title{
+            font-size: 16px;
+        }
+        .td_subtitle{
+            font-size: 14px;
+        }
+        .mtop{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header_content" class="header_content">
+        <table>
+            <tr>
+                <td class="valig">
+                    <h4 id="demo_date" class="td_subtitle">{{date}}</h4>
+                </td>
+                <td class="alignRtight">
+                    <table>
+                        <tr>
+                            <td>
+                                <h4 class="td_title">Dr S Suresh Kumar</h4>
+                            </td>
+                        <tr>
+                            <td>
+                                <h4 class="td_subtitle">sureshpallium@gmail.com</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4 class="td_subtitle">+91 9446469351</h4>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <table class="flexContainer">
+            <tr>
+                <td class="td_normal">
+                    {{bio}}
+                </td>
+                <td class="td_normal">
+                    Patient ID: {{patient_id}}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <table class="flexContainer">
+            <tr>
+                <td class="td_normal">
+                    {{medical_dis}}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="td_subtitle mtop">
+        Adv.
+    </div>
+    <div>
+        <table class="flexContainer">
+            {% for e in data %}
+            {% if forloop.counter|divisibleby:2 == 0 %}
+            <tr class="odd">
+                {% for i in e %}
+                <td class="td_normal">{{i}}</td>
+                {% endfor %}
+            </tr>
+            {% else %}
+            <tr class="even">
+                {% for i in e %}
+                <td class="td_normal">{{i}}</td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="td_normal mtop">
+        {{refnote}}
+    </div>
+
+    <div class="td_normal mtop">
+        Lab test advised: {{final_lab_test_string}}
+    </div>
+
+    <div>
+        <table class="flexContainer">
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal">Date</td>
+                <td class="td_normal">Date</td>
+                <td class="td_normal">Date</td>
+                <td class="td_normal">Date</td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal">Urinalysis</td>
+                <td class="td_normal">Albumin</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Sugar</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Deposit</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Urobilinogen</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Acetone</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Osmolality</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Ph</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+
+
+
+            <tr class="odd">
+                <td class="td_normal">Haematology</td>
+                <td class="td_normal">Hb</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">MCV</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">MCH</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">MCHC</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">PVC</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">RDW</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">TC</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">ANC</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">AEC</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Platelets</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">RBC</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">ESR</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">P. Smear</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal">Blood Chemistry</td>
+                <td class="td_normal">RBS</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">FBS</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">PPBS</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">B Urea</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">S Cr</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">NA</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">K</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Ca</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">UA</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal">Hormone assay</td>
+                <td class="td_normal">T3</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">T4</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">TSH</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal">Tumour markers</td>
+                <td class="td_normal">... </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">... </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal">X rays</td>
+                <td class="td_normal">Chest PA view</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Chest AP view</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">KUB</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Pelvis</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">PNS</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal">CTScan</td>
+                <td class="td_normal">Brain</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Abdoen</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Chest</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+                <td class="td_normal pd"> </td>
+            </tr>
+            <tr class="odd">
+                <td class="td_normal">MRI</td>
+                <td class="td_normal">Brain</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+            <tr class="even">
+                <td class="td_normal"> </td>
+                <td class="td_normal">Abdomen</td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+                <td class="td_normal"> </td>
+            </tr>
+
+        </table>
+    </div>
+
+
+
+    <!-- Content for Static Frame 'footer_frame' -->
+    <div id="footer_content">
+        Please don't substitute medicine
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const d = new Date();
+        document.getElementById("demo_date").innerHTML = d;
+    </script>
+</body>
+
+</html>
