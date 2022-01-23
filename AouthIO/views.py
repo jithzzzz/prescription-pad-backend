@@ -66,7 +66,7 @@ class ViewPDF(View):
             md = meds.MName
             m = [md, i['time'], 'X ' + str(i['days']) + ' days']
             pp.append(m)
-        
+
         print(pp, "YYYYYYYY")
         if(gender == 'male'):
             gender = 'M'
@@ -305,7 +305,7 @@ def PatientHistory(request, id):
             pbase = models.PRBase.objects.filter(patient_id=id).values()
             potherdetails = models.PatientDetails.objects.filter(
                 patient_id=id).values()
-            
+
 
             if len(list(potherdetails)) == 1:
                 extr_field = models.BloodType.objects.get(
@@ -362,7 +362,7 @@ def PatientHistory(request, id):
                         'dignosis': dignosis_tmp, 'extr_field': extr_field.bloodType, 'labtest': list(labtest_tmp),
                         'prescription_records': list(prescrip_record), 'labTestdata': list(labdummy)})
                 else:
-                    finalData.append({'patientInfo': list(potherdetails), 'OPID': opid,
+                    finalData.append({'basicData': [], 'patientInfo': list(potherdetails), 'OPID': opid,
                                           'dignosis': dignosis_tmp, 'extr_field': extr_field.bloodType, 'labtest': list(labtest_tmp),
                                           'prescription_records': list(prescrip_record), 'labTestdata': list(labdummy)})
 
@@ -374,6 +374,7 @@ def PatientHistory(request, id):
     except Exception as e:
         print(e)
         return JsonResponse({"Error": str(e)})
+
 
 
 @api_view(['POST'])
@@ -519,44 +520,51 @@ def pdf_view(key):
     try:
         basicdata = models.PRBase.objects.filter(Bid=key).values()
         basicdata = list(basicdata)
+        refnote = ''
         refnote = basicdata[0]['refnote']
         # red_doc = basicdata[0]['RFId']
-        if(models.Docterreferrence.objects.get(RFId=basicdata[0]['RFId'])):
-            red_doc = models.Docterreferrence.objects.get(
-                RFId=basicdata[0]['RFId'])
-            ref_name = red_doc.Name
-            ref_dep = red_doc.Department
-            ref_pho = red_doc.Pho
-        else:
-            ref_name = ''
-            ref_dep = ''
-            ref_pho = ''
+        # if(models.Docterreferrence.objects.get(RFId=basicdata[0]['RFId'])):
+        #     red_doc = models.Docterreferrence.objects.get(
+        #         RFId=basicdata[0]['RFId'])
+        #     ref_name = red_doc.Name
+        #     ref_dep = red_doc.Department
+        #     ref_pho = red_doc.Pho
+        # else:
+        #     ref_name = ''
+        #     ref_dep = ''
+        #     ref_pho = ''
 
-        medical_condition = models.PrDaignosis.objects.filter(
-            Bid_id=key).values()
+        # medical_condition = models.PrDaignosis.objects.filter(
+        #     Bid_id=key).values()
+        labtest = []
         labtest = models.PrLabTest.objects.filter(Bid_id=key).values()
         print(list(labtest), "############")
 
         # medical_condition = medical_condition.split(',')
         patientdata = models.PatientDetails.objects.get(
             patient_id=basicdata[0]['patient_id_id'])
+        name = ''
         name = patientdata.firstName + ' ' + patientdata.lastName
         pho = patientdata.phoneNumber
+        gender = ''
         gender = patientdata.gender
         today = date.today()
         byear = patientdata.dob.year
         bmonth = patientdata.dob.month
         bdate = patientdata.dob.day
+        age = ''
         age = today.year - byear - ((today.month, today.day) < (bmonth, bdate))
+        opid = ''
         opid = str(patientdata.firstName)[:2].upper() + str(patientdata.phoneNumber)[5:] + \
             str(str(patientdata.dob).split('-')[0] + str(patientdata.dob).split('-')[1] +
                 str(patientdata.dob).split('-')[2])
 
-
+        prescriptionDetails = []
         prescriptionDetails = models.prescriptionRecords.objects.filter(
             Bid=key).values()
+        medical_dis = ''
         medical_dis = basicdata[0]['medical_condition']
-        refnote = basicdata[0]['refnote']
+
 
         return(name, opid, gender, age, prescriptionDetails, medical_dis, refnote, list(labtest))
     except Exception as e:
